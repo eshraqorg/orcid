@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ORCID Login</title>
+</head>
+<body>
+  <h1>تسجيل الدخول عبر ORCID</h1>
+  <a id="orcid-login" href="#">Login with ORCID</a>
+
+  <script>
+    // إعدادات OAuth
+    const clientId     = 'APP-332C9Q50ROWJ9DX0';
+    const redirectUri  = 'https://v0-eshraq-orcid-login.vercel.app/callback.html';
+    const scope        = '/authenticate';
+
+    const authUrl =
+      'https://orcid.org/oauth/authorize'
+      + '?client_id='    + encodeURIComponent(clientId)
+      + '&response_type=code'
+      + '&scope='        + encodeURIComponent(scope)
+      + '&redirect_uri=' + encodeURIComponent(redirectUri);
+
+    document.getElementById('orcid-login').href = authUrl;
+  </script>
+</body>
+</html>
