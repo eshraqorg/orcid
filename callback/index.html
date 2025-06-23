@@ -2,22 +2,29 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>ORCID Callback</title>
-  <style>
-    body { font-family: sans-serif; direction: rtl; text-align: center; margin-top: 100px; }
-    code { background: #eee; padding: 10px; display: block; margin: 20px auto; width: 80%; word-break: break-all; }
-  </style>
+  <title>رمز ORCID</title>
 </head>
 <body>
-  <h1>تم تسجيل الدخول إلى ORCID</h1>
-  <p>رمز التفويض (Authorization Code):</p>
-  <code id="code">يتم التحميل...</code>
+  <h2>✅ تم استلام رمز ORCID</h2>
+  <p id="msg">جارٍ التحميل...</p>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    const code = params.get("code") || hashParams.get("code") || "لم يتم العثور على كود";
-    document.getElementById("code").textContent = code;
+    const code = params.get("code");
+    const error = params.get("error");
+
+    const msg = document.getElementById("msg");
+    if (code) {
+      msg.innerHTML = `
+        <strong>رمز التفويض (Authorization Code):</strong><br>
+        <code style="font-size:1.2em;color:green">${code}</code>
+        <p>انسخه واستخدمه للحصول على access_token.</p>
+      `;
+    } else if (error) {
+      msg.innerHTML = `<strong>حدث خطأ:</strong> ${error}`;
+    } else {
+      msg.innerText = "لم يتم العثور على رمز في الرابط.";
+    }
   </script>
 </body>
 </html>
