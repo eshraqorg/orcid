@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>رمز ORCID</title>
+</head>
+<body>
+  <h1>📥 تم استلام رمز ORCID</h1>
+  <p id="message">جارٍ المعالجة...</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const error = params.get('error');
+
+    const msg = document.getElementById('message');
+    if (code) {
+      msg.innerHTML = `<strong>رمز التفويض:</strong> <code>${code}</code><br><br>
+        يرجى نسخه واستخدامه في سكربت الحصول على Access Token.`;
+    } else if (error) {
+      msg.innerHTML = `<strong>خطأ:</strong> ${error}`;
+    } else {
+      msg.textContent = 'لم يتم العثور على رمز في الرابط.';
+    }
+  </script>
+</body>
+</html>
