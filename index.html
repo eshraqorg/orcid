@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>ORCID Login</title>
+  <meta charset="UTF-8" />
+  <title>العودة من ORCID</title>
 </head>
 <body>
-  <h1>تسجيل الدخول عبر ORCID</h1>
-  <a id="orcid-login" href="#">Login with ORCID</a>
+  <h2>✅ تم تسجيل الدخول إلى ORCID</h2>
+  <p id="msg">جارٍ التحقق من كود التفويض...</p>
 
   <script>
-    // إعدادات OAuth
-    const clientId     = 'APP-332C9Q50ROWJ9DX0';
-    const redirectUri  = 'https://orcid-eshraqorgs-projects.vercel.app/callback.html';
-    const scope        = '/authenticate';
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const error = params.get("error");
 
-    const authUrl =
-      'https://orcid.org/oauth/authorize'
-      + '?client_id='    + encodeURIComponent(clientId)
-      + '&response_type=code'
-      + '&scope='        + encodeURIComponent(scope)
-      + '&redirect_uri=' + encodeURIComponent(redirectUri);
-
-    document.getElementById('orcid-login').href = authUrl;
+    if (error) {
+      document.getElementById("msg").innerHTML = `❌ خطأ: ${error}`;
+    } else if (code) {
+      document.getElementById("msg").innerHTML = `<b>كود التفويض:</b><br><code>${code}</code><br>انسخه واستخدمه للحصول على access_token`;
+    } else {
+      document.getElementById("msg").textContent = "❌ لم يتم العثور على كود تفويض في الرابط.";
+    }
   </script>
 </body>
 </html>
